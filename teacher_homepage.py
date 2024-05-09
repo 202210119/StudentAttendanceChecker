@@ -1,6 +1,6 @@
 import streamlit as st
 from authentication import logout
-from streamlit_delta_calendar import DeltaCalendar
+import streamlit_delta_calendar
 
 def teacher_homepage():
     st.title(f"Welcome, Teacher {st.session_state.username}!")
