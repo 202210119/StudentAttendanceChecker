@@ -49,12 +49,13 @@ def main():
         st.header("Login")
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
-        account_type = st.radio("Account Type", ["Teacher", "Student"])
         if st.button("Login"):
-            if account_type == "Teacher":
+            if username in teacher_users:
                 login_teacher(username, password)
-            elif account_type == "Student":
+            elif username in student_users:
                 login_student(username, password)
+            else:
+                st.error("Invalid username. Please try again.")
 
     elif choice == "Register":
         st.header("Register")
