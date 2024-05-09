@@ -20,19 +20,15 @@ def register_student(username, password):
         st.session_state.student_users[username] = password
         st.success("Student account registration successful! You can now login.")
 
-def login_teacher(username, password):
+def login(username, password):
     if username in st.session_state.teacher_users and st.session_state.teacher_users[username] == password:
         st.success(f"Welcome back, Teacher {username}!")
         teacher_homepage(username)
-    else:
-        st.error("Invalid username or password for Teacher account. Please try again.")
-
-def login_student(username, password):
-    if username in st.session_state.student_users and st.session_state.student_users[username] == password:
+    elif username in st.session_state.student_users and st.session_state.student_users[username] == password:
         st.success(f"Welcome back, Student {username}!")
         student_homepage(username)
     else:
-        st.error("Invalid username or password for Student account. Please try again.")
+        st.error("Invalid username or password. Please try again.")
 
 def teacher_homepage(username):
     st.title(f"Welcome, Teacher {username}!")
@@ -54,12 +50,8 @@ def main():
         st.header("Login")
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
-        account_type = st.radio("Account Type", ["Teacher", "Student"])
         if st.button("Login"):
-            if account_type == "Teacher":
-                login_teacher(username, password)
-            elif account_type == "Student":
-                login_student(username, password)
+            login(username, password)
 
     elif choice == "Register":
         st.header("Register")
