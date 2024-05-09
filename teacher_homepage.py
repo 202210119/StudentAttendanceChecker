@@ -1,6 +1,6 @@
 import streamlit as st
 from authentication import logout
-import streamlit_delta_calendar
+from streamlit_calendar import st_calendar
 
 def teacher_homepage():
     st.title(f"Welcome, Teacher {st.session_state.username}!")
@@ -8,5 +8,5 @@ def teacher_homepage():
 
     # Add a calendar for teachers
     st.write("Teacher Calendar:")
-    calendar = DeltaCalendar()
-    calendar
+    date_value = st_calendar(label="Select a date", key="teacher_calendar")
+    st.write(f"Selected date: {date_value}")
