@@ -1,6 +1,6 @@
 import streamlit as st
 from authentication import logout
-from streamlit_calendar import st_calendar
+from streamlit_calendar
 
 def student_homepage():
     st.title(f"Welcome, Student {st.session_state.username}!")
