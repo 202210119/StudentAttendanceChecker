@@ -1,8 +1,8 @@
 import streamlit as st
 from authentication import logout
 
-def student_homepage(username):
-    st.title(f"Welcome, Student {username}!")
+def student_homepage():
+    st.title("Student Homepage")
     st.write("This is the Student homepage.")
     if st.button("Logout"):
         logout()
