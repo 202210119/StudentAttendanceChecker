@@ -7,5 +7,5 @@ def login_page():
     password = st.text_input("Password", type="password")
     if st.button("Login"):
         if login(username, password):
-            st.empty()
+            st.empty()  # Clear the page
             st.success(f"Welcome, {st.session_state.user_type.capitalize()} {username}!")
