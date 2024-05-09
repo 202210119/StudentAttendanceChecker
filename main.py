@@ -22,21 +22,27 @@ def register_student(username, password):
 
 def login(username, password):
     if username in st.session_state.teacher_users and st.session_state.teacher_users[username] == password:
+        st.session_state.page = "teacher_homepage"
         st.success(f"Welcome back, Teacher {username}!")
-        teacher_homepage(username)
     elif username in st.session_state.student_users and st.session_state.student_users[username] == password:
+        st.session_state.page = "student_homepage"
         st.success(f"Welcome back, Student {username}!")
-        student_homepage(username)
     else:
         st.error("Invalid username or password. Please try again.")
 
 def teacher_homepage(username):
     st.title(f"Welcome, Teacher {username}!")
     st.write("This is the Teacher homepage.")
+    if st.button("Logout"):
+        st.session_state.pop("page")
+        st.experimental_rerun()
 
 def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
     st.write("This is the Student homepage.")
+    if st.button("Logout"):
+        st.session_state.pop("page")
+        st.experimental_rerun()
 
 def main():
     initialize_session_state()
@@ -52,6 +58,11 @@ def main():
         password = st.text_input("Password", type="password")
         if st.button("Login"):
             login(username, password)
+            if "page" in st.session_state:
+                if st.session_state.page == "teacher_homepage":
+                    teacher_homepage(username)
+                elif st.session_state.page == "student_homepage":
+                    student_homepage(username)
 
     elif choice == "Register":
         st.header("Register")
