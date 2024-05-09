@@ -1,33 +1,34 @@
 import streamlit as st
 
-teacher_users = {}
-student_users = {}
+def initialize_session_state():
+    if "teacher_users" not in st.session_state:
+        st.session_state.teacher_users = {}
+    if "student_users" not in st.session_state:
+        st.session_state.student_users = {}
 
 def register_teacher(username, password):
-    if username in teacher_users:
+    if username in st.session_state.teacher_users:
         st.warning("Teacher account already exists! Please choose a different username.")
     else:
-        teacher_users[username] = password
+        st.session_state.teacher_users[username] = password
         st.success("Teacher account registration successful! You can now login.")
-        st.write("Registered Teacher Accounts:", teacher_users)
 
 def register_student(username, password):
-    if username in student_users:
+    if username in st.session_state.student_users:
         st.warning("Student account already exists! Please choose a different username.")
     else:
-        student_users[username] = password
+        st.session_state.student_users[username] = password
         st.success("Student account registration successful! You can now login.")
-        st.write("Registered Student Accounts:", student_users)
 
 def login_teacher(username, password):
-    if username in teacher_users and teacher_users[username] == password:
+    if username in st.session_state.teacher_users and st.session_state.teacher_users[username] == password:
         st.success(f"Welcome back, Teacher {username}!")
         teacher_homepage(username)
     else:
         st.error("Invalid username or password for Teacher account. Please try again.")
 
 def login_student(username, password):
-    if username in student_users and student_users[username] == password:
+    if username in st.session_state.student_users and st.session_state.student_users[username] == password:
         st.success(f"Welcome back, Student {username}!")
         student_homepage(username)
     else:
@@ -42,6 +43,8 @@ def student_homepage(username):
     st.write("This is the Student homepage.")
 
 def main():
+    initialize_session_state()
+    
     st.title("Simple Login and Register App")
 
     menu = ["Login", "Register"]
@@ -51,15 +54,12 @@ def main():
         st.header("Login")
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
+        account_type = st.radio("Account Type", ["Teacher", "Student"])
         if st.button("Login"):
-            if username in teacher_users:
+            if account_type == "Teacher":
                 login_teacher(username, password)
-            elif username in student_users:
+            elif account_type == "Student":
                 login_student(username, password)
-            else:
-                st.error("Invalid username. Please try again.")
-                st.write("Registered Teacher Accounts:", teacher_users)
-                st.write("Registered Student Accounts:", student_users)
 
     elif choice == "Register":
         st.header("Register")
