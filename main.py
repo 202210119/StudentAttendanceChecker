@@ -18,7 +18,7 @@ def login(username, password):
         st.error("Invalid username or password. Please try again.")
 
 def main():
-    st.title("Simple Login and Register App")
+    st.title("Login or Register")
 
     menu = ["Login", "Register"]
     choice = st.sidebar.selectbox("Menu", menu)
