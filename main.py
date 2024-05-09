@@ -1,7 +1,6 @@
 import streamlit as st
 import sqlite3
 
-# Function to create the database table
 def create_table():
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
@@ -14,7 +13,6 @@ def create_table():
     conn.commit()
     conn.close()
 
-# Function to register new users
 def register(username, password, account_type):
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
@@ -27,7 +25,6 @@ def register(username, password, account_type):
         st.warning("Username already exists! Please choose a different username.")
     conn.close()
 
-# Function to authenticate users
 def login(username, password):
     conn = sqlite3.connect("users.db")
     c = conn.cursor()
