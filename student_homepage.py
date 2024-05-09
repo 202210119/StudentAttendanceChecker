@@ -2,8 +2,8 @@ import streamlit as st
 from authentication import logout
 
 def student_homepage():
-    st.title("Student Homepage")
+    st.title(f"Welcome, Student {st.session_state.username}!")
     st.write("This is the Student homepage.")
     if st.button("Logout"):
         logout()
-        st.success("You have been logged out.")
+        st.experimental_rerun()  # Rerun the app to show the login page
