@@ -1,32 +1,45 @@
 import streamlit as st
+import sqlite3
 
-def initialize_session_state():
-    if "teacher_users" not in st.session_state:
-        st.session_state.teacher_users = {}
-    if "student_users" not in st.session_state:
-        st.session_state.student_users = {}
+# Function to create the database table
+def create_table():
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("""CREATE TABLE IF NOT EXISTS users (
+                id INTEGER PRIMARY KEY,
+                username TEXT UNIQUE,
+                password TEXT,
+                account_type TEXT
+                )""")
+    conn.commit()
+    conn.close()
 
-def register_teacher(username, password):
-    if username in st.session_state.teacher_users:
-        st.warning("Teacher account already exists! Please choose a different username.")
-    else:
-        st.session_state.teacher_users[username] = password
-        st.success("Teacher account registration successful! You can now login.")
+# Function to register new users
+def register(username, password, account_type):
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    try:
+        c.execute("INSERT INTO users (username, password, account_type) VALUES (?, ?, ?)",
+                  (username, password, account_type))
+        conn.commit()
+        st.success("Registration successful! You can now login.")
+    except sqlite3.IntegrityError:
+        st.warning("Username already exists! Please choose a different username.")
+    conn.close()
 
-def register_student(username, password):
-    if username in st.session_state.student_users:
-        st.warning("Student account already exists! Please choose a different username.")
-    else:
-        st.session_state.student_users[username] = password
-        st.success("Student account registration successful! You can now login.")
-
+# Function to authenticate users
 def login(username, password):
-    if username in st.session_state.teacher_users and st.session_state.teacher_users[username] == password:
-        st.success(f"Welcome back, Teacher {username}!")
-        teacher_homepage(username)
-    elif username in st.session_state.student_users and st.session_state.student_users[username] == password:
-        st.success(f"Welcome back, Student {username}!")
-        student_homepage(username)
+    conn = sqlite3.connect("users.db")
+    c = conn.cursor()
+    c.execute("SELECT * FROM users WHERE username=? AND password=?", (username, password))
+    user = c.fetchone()
+    conn.close()
+    if user:
+        st.success(f"Welcome back, {user[3]} {user[1]}!")
+        if user[3] == "Teacher":
+            teacher_homepage(user[1])
+        elif user[3] == "Student":
+            student_homepage(user[1])
     else:
         st.error("Invalid username or password. Please try again.")
 
@@ -39,7 +52,7 @@ def student_homepage(username):
     st.write("This is the Student homepage.")
 
 def main():
-    initialize_session_state()
+    create_table()
     
     st.title("Simple Login and Register App")
 
@@ -61,10 +74,7 @@ def main():
         confirm_password = st.text_input("Confirm Password", type="password")
         if new_password == confirm_password:
             if st.button("Register"):
-                if account_type == "Teacher":
-                    register_teacher(new_username, new_password)
-                elif account_type == "Student":
-                    register_student(new_username, new_password)
+                register(new_username, new_password, account_type)
         else:
             st.warning("Passwords do not match.")
 
