@@ -9,6 +9,7 @@ def register_teacher(username, password):
     else:
         teacher_users[username] = password
         st.success("Teacher account registration successful! You can now login.")
+        st.write("Registered Teacher Accounts:", teacher_users)
 
 def register_student(username, password):
     if username in student_users:
@@ -16,6 +17,7 @@ def register_student(username, password):
     else:
         student_users[username] = password
         st.success("Student account registration successful! You can now login.")
+        st.write("Registered Student Accounts:", student_users)
 
 def login_teacher(username, password):
     if username in teacher_users and teacher_users[username] == password:
@@ -56,6 +58,8 @@ def main():
                 login_student(username, password)
             else:
                 st.error("Invalid username. Please try again.")
+                st.write("Registered Teacher Accounts:", teacher_users)
+                st.write("Registered Student Accounts:", student_users)
 
     elif choice == "Register":
         st.header("Register")
