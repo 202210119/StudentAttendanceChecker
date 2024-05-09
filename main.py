@@ -11,19 +11,24 @@ def main():
     st.title("Simple Login and Register App")
 
     st.sidebar.title("Navigation")
-    page = st.sidebar.radio("Go to", ["Login", "Register"])
+    pages = ["Login", "Register"]
+    if st.session_state.get("logged_in", False):
+        # Add user-specific homepage to navigation
+        if st.session_state.user_type == "teacher":
+            pages.append("Teacher Homepage")
+        elif st.session_state.user_type == "student":
+            pages.append("Student Homepage")
+
+    page = st.sidebar.radio("Go to", pages)
 
     if page == "Login":
         login_page()
     elif page == "Register":
         register_page()
-
-    # Display Teacher or Student homepage if logged in
-    if st.session_state.get("logged_in", False):
-        if st.session_state.user_type == "teacher":
-            teacher_homepage()
-        elif st.session_state.user_type == "student":
-            student_homepage()
+    elif page == "Teacher Homepage":
+        teacher_homepage()
+    elif page == "Student Homepage":
+        student_homepage()
 
 if __name__ == "__main__":
     main()
