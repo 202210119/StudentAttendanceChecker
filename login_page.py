@@ -7,8 +7,5 @@ def login_page():
     password = st.text_input("Password", type="password")
     if st.button("Login"):
         if login(username, password):
-            st.empty()  # Clear the page
-            if st.session_state.user_type == "teacher":
-                teacher_homepage(username)
-            elif st.session_state.user_type == "student":
-                student_homepage(username)
+            st.empty()
+            st.success(f"Welcome, {st.session_state.user_type.capitalize()} {username}!")
