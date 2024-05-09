@@ -22,31 +22,27 @@ def register_student(username, password):
 
 def login(username, password):
     if username in st.session_state.teacher_users and st.session_state.teacher_users[username] == password:
-        st.session_state.page = "teacher_homepage"
-        st.success(f"Welcome back, Teacher {username}!")
+        st.session_state.logged_in = True
+        st.session_state.user_type = "teacher"
+        st.session_state.username = username
+        return True
     elif username in st.session_state.student_users and st.session_state.student_users[username] == password:
-        st.session_state.page = "student_homepage"
-        st.success(f"Welcome back, Student {username}!")
+        st.session_state.logged_in = True
+        st.session_state.user_type = "student"
+        st.session_state.username = username
+        return True
     else:
         st.error("Invalid username or password. Please try again.")
+        return False
 
-def teacher_homepage(username):
-    st.title(f"Welcome, Teacher {username}!")
-    st.write("This is the Teacher homepage.")
-    if st.button("Logout"):
-        st.session_state.pop("page")
-        st.experimental_rerun()
-
-def student_homepage(username):
-    st.title(f"Welcome, Student {username}!")
-    st.write("This is the Student homepage.")
-    if st.button("Logout"):
-        st.session_state.pop("page")
-        st.experimental_rerun()
+def logout():
+    st.session_state.logged_in = False
+    st.session_state.user_type = None
+    st.session_state.username = None
 
 def main():
     initialize_session_state()
-    
+
     st.title("Simple Login and Register App")
 
     menu = ["Login", "Register"]
@@ -57,13 +53,15 @@ def main():
         username = st.text_input("Username")
         password = st.text_input("Password", type="password")
         if st.button("Login"):
-            login(username, password)
-            if "page" in st.session_state:
-                if st.session_state.page == "teacher_homepage":
-                    teacher_homepage(username)
-                elif st.session_state.page == "student_homepage":
-                    student_homepage(username)
-
+            if login(username, password):
+                st.empty()
+                if st.session_state.user_type == "teacher":
+                    st.title(f"Welcome, Teacher {username}!")
+                    st.write("This is the Teacher homepage.")
+                elif st.session_state.user_type == "student":
+                    st.title(f"Welcome, Student {username}!")
+                    st.write("This is the Student homepage.")
+                st.button("Logout", on_click=logout)
     elif choice == "Register":
         st.header("Register")
         account_type = st.radio("Account Type", ["Teacher", "Student"])
