@@ -17,7 +17,7 @@ def teacher_homepage(username):
 
     if selected_class == "Create New Class":
         create_new_class(username)
-    else:
+    elif selected_class:
         display_class_schedule(selected_class)
 
 def create_new_class(username):
