@@ -1,3 +1,13 @@
+# main.py
+
+import streamlit as st
+from login_page import login_page
+from register_page import register_page
+from class_page import class_page
+from teacher import Teacher
+from homepage import homepage
+import initialize 
+
 def main():
     initialize.initialize_session_state()
     
