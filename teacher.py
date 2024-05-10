@@ -1,4 +1,3 @@
- teacher.py
 import streamlit as st
 class Teacher:
     @staticmethod
