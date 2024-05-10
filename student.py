@@ -17,7 +17,7 @@ class Student:
             # Check if the student is already in the class
             if st.session_state.username not in st.session_state.classes[class_name]:
                 # Add the student to the class
-                st.session_state.classes[class_name].append(st.session_state.username)
+                st.session_state.classes[class_name].update(st.session_state.username)
                 return True  # Return True on successful join
             else:
                 st.warning("You are already in this class.")
