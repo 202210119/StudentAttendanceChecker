@@ -4,7 +4,6 @@ from authentication import logout
 from student import Student
 from teacher import Teacher
 
-
 def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
 
