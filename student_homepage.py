@@ -62,5 +62,5 @@ custom_css="""
     }
 """
 
-calendar = calendar(events=calendar_events, options=calendar_options, custom_css=custom_css)
+calendar = calendar(events=calendar_events, options=calendar_options, custom_css=custom_css, key="student")
 st.write(calendar)
