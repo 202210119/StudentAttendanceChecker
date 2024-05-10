@@ -23,13 +23,13 @@ def create_teacher_class(username):
 
     # Display existing classes
     st.header("Your Classes")
-    existing_classes = teacher.get_teacher_classes()
+    existing_classes = teacher.get_teacher_classes(username)
     if existing_classes:
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
         if selected_class:
             if st.button("Go to Class"):
                 st.session_state.selected_class = selected_class
-                st.experimental_rerun()  # Reload the app to go to the selected class
+                st.experimental_rerun()
     else:
         st.info("You haven't created any classes yet.")
 
