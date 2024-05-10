@@ -11,7 +11,9 @@ def homepage(username, user_type):
     elif user_type == "student":
         join_class(username)
 
-def create_teacher_class():
+def create_teacher_class(username):
+    st.title(f"Welcome, Teacher {username}!")
+
     st.header("Create a New Class")
     class_name = st.text_input("Enter Class Name:")
     if st.button("Create Class"):
@@ -24,13 +26,11 @@ def create_teacher_class():
     teacher = Teacher.get_teacher()
     existing_classes = teacher.get_teacher_classes()
     if existing_classes:
-        for class_name in existing_classes:
-            st.write(class_name)
-            if st.button(f"Delete {class_name}"):
-                if teacher.delete_class(class_name):
-                    st.success(f"Class '{class_name}' deleted successfully.")
-                else:
-                    st.error(f"Failed to delete class '{class_name}'.")
+        selected_class = st.selectbox("Select Class", [""] + existing_classes)
+        if selected_class:
+            if st.button("Go to Class"):
+                st.session_state.selected_class = selected_class
+                st.experimental_rerun()  # Reload the app to go to the selected class
     else:
         st.info("You haven't created any classes yet.")
 
