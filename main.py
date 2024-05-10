@@ -1,8 +1,9 @@
+#from teacher_homepage import teacher_homepage
+#from student_homepage import student_homepage
+
 import streamlit as st
 from login_page import login_page
 from register_page import register_page
-from teacher_homepage import teacher_homepage
-from student_homepage import student_homepage
 from class_page import class_page
 from teacher import Teacher
 import initialize 
