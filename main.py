@@ -9,44 +9,43 @@ from teacher import Teacher
 from initialize import initialize_session_state
 
 def main():
-    initialize_session_state()
+    initialize.initialize_session_state()
     
+    st.title("Simple Login and Register App")
+
     st.sidebar.title("Navigation")
     pages = ["Login", "Register"]
     if st.session_state.get("logged_in", False):
         if st.session_state.user_type == "teacher":
             pages.extend(["Teacher Homepage"])
-            # Add class creation and class selection options dynamically
-            teacher = Teacher.get_teacher()
-            for class_name in teacher.get_teacher_classes():
+            teacher_instance = teacher.Teacher.get_teacher()
+            for class_name in teacher_instance.get_teacher_classes():
                 pages.append(class_name)
-            pages.append("Create Class")
         elif st.session_state.user_type == "student":
             pages.append("Student Homepage")
 
-        # Check if a class is selected for management
         if "selected_class" in st.session_state:
             pages.append("Class Page")
 
     page = st.sidebar.radio("Go to", pages)
 
     if page == "Login":
-        login_page()
+        login_page.login_page()
     elif page == "Register":
-        register_page()
+        register_page.register_page()
     elif page == "Teacher Homepage":
-        teacher_homepage(st.session_state.username)
+        teacher_homepage.teacher_homepage(st.session_state.username)
     elif page == "Student Homepage":
-        student_homepage(st.session_state.username)
+        student_homepage.student_homepage(st.session_state.username)
     elif page == "Create Class":
         # Show the create class page
-        create_class_page()
+        create_class_page.create_class_page()
     elif page == "Class Page":
-        class_page(st.session_state.username, st.session_state.selected_class)
+        class_page.class_page(st.session_state.username, st.session_state.selected_class)
     else:
         # Check if the selected page is a class page
-        if page in teacher.get_teacher_classes():
-            class_page(st.session_state.username, page)
+        if page in teacher_instance.get_teacher_classes():
+            class_page.class_page(st.session_state.username, page)
 
 if __name__ == "__main__":
     main()
