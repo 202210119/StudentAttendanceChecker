@@ -17,5 +17,5 @@ def student_homepage(username):
     while True:
         current_time = requests.get("http://worldtimeapi.org/api/timezone/Etc/UTC").json()["datetime"]
         current_time = pd.to_datetime(current_time)
-        current_time = current_time.strftime("%I:%M %p")
+        current_time = current_time.strftime("%I:%M:%S %p")
         current_time_placeholder.write(f"## Current Time: {current_time}")
