@@ -12,20 +12,22 @@ class Student:
             st.session_state.classes = {}
 
     def join_class(self, class_name):
+        # Check if the class_name exists in the session state
         if class_name in st.session_state.classes:
             if st.session_state.username not in st.session_state.classes[class_name]:
-                st.session_state.classes[class_name] = [st.session_state.username]
-                return True
+                st.session_state.classes[class_name] = [st.session_state.username]  # Create a list with username
+                return True  # Return True on successful join
             else:
                 st.warning("You are already in this class.")
         else:
-            st.session_state.classes[class_name] = [st.session_state.username]
-            return True
+            st.session_state.classes[class_name] = [st.session_state.username]  # Create a new class entry with username list
+            return True  # Return True on successful join
 
-        return False
+        return False  # Return False if joining fails
 
-    def get_student_classes(self):
-        if st.session_state.classes:
-            return [class_name for class_name, students in st.session_state.classes.items() if st.session_state.username in students]
-        else:
-            return []
+def get_student_classes(self):
+    if "username" not in st.session_state:
+        return []
+
+    student_username = st.session_state.username
+    return [class_name for class_name, students in st.session_state.classes.items() if student_username in students]
