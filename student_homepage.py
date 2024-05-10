@@ -6,7 +6,7 @@ def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
 
     st.write("# Current Time:")
-    current_time = datetime.datetime.now().strftime("%H:%M:%S")
+    current_time = datetime.datetime.now().strftime("%I:%M:%S %p")
     st.write(f"## {current_time}")
 
     st.header("Join a Class")
