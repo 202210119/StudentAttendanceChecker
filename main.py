@@ -8,8 +8,6 @@ from initialize import initialize_session_state
 def main():
     initialize_session_state()
     
-    st.title("Simple Login and Register App")
-
     st.sidebar.title("Navigation")
     pages = ["Login", "Register"]
     if st.session_state.get("logged_in", False):
