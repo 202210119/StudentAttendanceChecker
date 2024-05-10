@@ -2,6 +2,8 @@
 import streamlit as st
 from authentication import logout
 from teacher import Teacher
+from student import Student
+
 def class_page(username, class_name):
     st.title(f"Class: {class_name}")
     # Display option to create a new event
