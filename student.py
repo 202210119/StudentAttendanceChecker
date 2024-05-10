@@ -16,8 +16,9 @@ class Student:
     def join_class(self, class_code, teacher_classes):
         if class_code in teacher_classes:
             if class_code not in st.session_state.classes:
-                st.session_state.classes[class_code] = [] 
-            st.session_state.classes[class_code].append(st.session_state.username)
+                st.session_state.classes[class_code] = [st.session_state.username]  # Initialize the class code key with a list containing the username
+            else:
+                st.session_state.classes[class_code].append(st.session_state.username)  # Append the username to the list
             return True
         else:
             return False
