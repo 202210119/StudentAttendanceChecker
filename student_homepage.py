@@ -1,6 +1,7 @@
+# student_homepage.py
 import streamlit as st
 from authentication import logout
-from student import Student  # Import the Student class directly from Student.py
+from student import Student
 
 def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
@@ -8,12 +9,12 @@ def student_homepage(username):
     st.header("Join a Class")
     class_code = st.text_input("Enter Class Code:")
     if st.button("Join"):
-        student = Student(username)
+        student = Student.get_student(username)
         if student.join_class(class_code):
             st.success(f"You have joined the class with code '{class_code}'.")
 
     # Display the classes the student has joined
-    student_instance = student.get_student(username)
+    student_instance = Student.get_student(username)
     student_classes = student_instance.get_student_classes()
 
     st.header("Your Classes")
