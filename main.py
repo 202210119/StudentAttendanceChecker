@@ -35,4 +35,9 @@ def main():
         homepage(st.session_state.username, st.session_state.user_type)
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
-   
+    else:
+        if page in teacher_instance.get_teacher_classes():
+            class_page(st.session_state.username, page)
+
+if __name__ == "__main__":
+    main()
