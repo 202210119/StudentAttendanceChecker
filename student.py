@@ -17,7 +17,7 @@ class Student:
         if class_name in teacher_classes:
             if class_name not in st.session_state.classes:
                 st.session_state.classes[class_name] = []
-            st.session_state.classes[class_name].append(st.session_state.username)
+            st.session_state.classes[class_name] = [st.session_state.username]
             return True
         else:
             return False
