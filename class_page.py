@@ -1,3 +1,9 @@
+# class_page.py
+
+import streamlit as st
+from authentication import logout
+from teacher import Teacher
+
 def class_page(username, class_name):
     st.title(f"Class: {class_name}")
 
@@ -14,14 +20,11 @@ def class_page(username, class_name):
     st.header("Class Schedule")
     teacher = Teacher.get_teacher()
     class_schedule = teacher.get_class_schedule(class_name)
-    if isinstance(class_schedule, dict):
-        if class_schedule:
-            for event_time, event_description in class_schedule.items():
-                st.write(f"- {event_time}: {event_description}")
-        else:
-            st.info("No events in the schedule yet.")
+    if class_schedule:
+        for event_time, event_description in class_schedule.items():
+            st.write(f"- {event_time}: {event_description}")
     else:
-        st.error("Error: Unable to retrieve class schedule.")
+        st.info("No events in the schedule yet.")
 
     # Option to delete the class
     if st.button("Delete Class"):
