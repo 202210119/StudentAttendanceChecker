@@ -24,3 +24,12 @@ def class_page(username, class_name):
             st.write(f"- {event_time}: {event_description}")
     else:
         st.info("No events in the schedule yet.")
+
+    # Option to delete the class
+    if st.button("Delete Class"):
+        teacher = Teacher.get_teacher()
+        if teacher.delete_class(class_name):
+            st.success(f"Class '{class_name}' deleted successfully.")
+            st.experimental_rerun()  # Rerun the app to refresh the teacher homepage
+        else:
+            st.error(f"Failed to delete class '{class_name}'.")
