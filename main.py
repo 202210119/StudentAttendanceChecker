@@ -32,9 +32,12 @@ if page == "Login":
 elif page == "Register":
     register_page()
 elif page == "Class Page":
-    class_page(st.session_state.username, st.session_state.selected_class)
+    if st.session_state.user_type == "teacher":
+        class_page(st.session_state.username, st.session_state.selected_class)
+    else:
+        class_page(st.session_state.username, page)
 else:
-    homepage(st.session_state.username, st.session_state.user_type)  # All users go to homepage
+    homepage(st.session_state.username, st.session_state.user_type)
 
 if __name__ == "__main__":
     main()
