@@ -20,13 +20,13 @@ class Student:
             else:
                 st.warning("You are already in this class.")
         else:
-            st.session_state.classes[class_name] = [st.session_state.username]  # Create a new class entry with username list
-            return True  # Return True on successful join
+            st.warning("No classes available to join.")  # Warn if no classes are available to join
+            return False  # Return False if no classes are available
 
         return False  # Return False if joining fails
 
     def get_student_classes(self):
         if st.session_state.classes:
-            return [class_name for class_name, students in st.session_state.classes.items() if st.session_state.username in students]
+            return list(st.session_state.classes.keys())  # Return all class names
         else:
             return []
