@@ -6,6 +6,7 @@ from teacher_homepage import teacher_homepage
 from student_homepage import student_homepage
 from class_page import class_page
 from initialize import initialize_session_state
+from teacher import Teacher
 
 def main():
     initialize_session_state()
