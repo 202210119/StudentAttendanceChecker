@@ -5,7 +5,7 @@ class Student:
     @staticmethod
     def get_student(username):
         if "students" not in st.session_state:
-            return None
+            st.session_state.students = {}
         students = st.session_state.students
         return students.get(username)
 
@@ -18,12 +18,21 @@ class Student:
         if class_code in teacher_classes:
             if self.username not in teacher_classes[class_code]:
                 teacher_classes[class_code].append(self.username)
+                self._update_student_classes(class_code)
                 return True
         return False
 
-    def get_student_classes(self):
+    def _update_student_classes(self, class_code):
         if "students" not in st.session_state:
-            return []
+            st.session_state.students = {}
         students = st.session_state.students
-        student_data = students.get(self.username, {})
+        if self.username not in students:
+            students[self.username] = {"classes": {}}
+        student_data = students[self.username]
+        student_data["classes"][class_code] = True
+
+    def get_student_classes(self):
+        student_data = self.get_student(self.username)
+        if student_data is None:
+            return []
         return list(student_data.get("classes", {}).keys())
