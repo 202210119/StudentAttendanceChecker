@@ -5,7 +5,7 @@ from teacher_homepage import teacher_homepage
 from student_homepage import student_homepage
 from class_page import class_page
 from create_class_page import create_class_page 
-from Teacher import Teacher  # Import the Teacher class directly from Teacher.py
+from teacher import teacher  # Import the Teacher class directly from Teacher.py
 import initialize  # Import the initialize.py file
 
 def main():
