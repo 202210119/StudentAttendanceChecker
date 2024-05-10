@@ -1,4 +1,4 @@
-#register_page.py
+# register_page.py
 
 import streamlit as st
 from authentication import register_teacher, register_student
