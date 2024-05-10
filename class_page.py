@@ -1,20 +1,26 @@
 # class_page.py
 import streamlit as st
-import pandas as pd
-import datetime
+from authentication import logout
+from teacher import Teacher
 
-def class_page(class_name):
+def class_page(username, class_name):
     st.title(f"Class: {class_name}")
 
-    # Display clock
-    current_time = datetime.datetime.now().strftime("%I:%M:%S %p")
-    st.header("Current Time:")
-    st.write(current_time)
+    # Display option to create a new event
+    st.header("Add Event to Schedule")
+    event_time = st.text_input("Enter Event Time:")
+    event_description = st.text_input("Enter Event Description:")
+    if st.button("Add Event"):
+        teacher = Teacher.get_teacher()
+        if teacher.add_event_to_schedule(class_name, event_time, event_description):
+            st.success("Event added successfully.")
 
     # Display class schedule
     st.header("Class Schedule")
-    schedule_df = pd.DataFrame(columns=["Time", "Event"], index=range(11))
-    if st.checkbox("Edit Schedule"):
-        schedule_df = st.dataframe(schedule_df, editable=True)
+    teacher = Teacher.get_teacher()
+    class_schedule = teacher.get_class_schedule(class_name)
+    if class_schedule:
+        for event_time, event_description in class_schedule.items():
+            st.write(f"- {event_time}: {event_description}")
     else:
-        st.dataframe(schedule_df)
+        st.info("No events in the schedule yet.")
