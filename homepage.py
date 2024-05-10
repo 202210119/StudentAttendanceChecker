@@ -35,19 +35,25 @@ def teacher_homepage(username):
 
 def student_homepage(username):
     st.header("Join a Class")
-    
-    st.header("Select a Class")
+
+    student = Student.get_student(username)
     teacher_instance = Teacher.get_teacher()
     existing_classes = teacher_instance.get_teacher_classes()
+
     if existing_classes:
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
         if selected_class:
-            if st.button("Go to Class"):
-                st.session_state.selected_class = selected_class
-                st.experimental_rerun() 
+            if st.button("Join"):
+                # Check if the selected class exists before joining
+                if selected_class in existing_classes:
+                    if student.join_class(selected_class, teacher_instance.get_teacher_classes()):
+                        st.success(f"You have joined the class '{selected_class}'.")
+                else:
+                    st.warning(f"The selected class '{selected_class}' does not exist.")
     else:
         st.info("No classes available to join.")
 
     if st.button("Logout"):
         logout()
         st.experimental_rerun()
+
