@@ -15,6 +15,8 @@ class Student:
         if class_name in st.session_state.classes:
             if st.session_state.username not in st.session_state.classes[class_name]:
                 # If the class exists and the student is not already in it, add the student
+                if not isinstance(st.session_state.classes[class_name], list):
+                    st.session_state.classes[class_name] = [st.session_state.classes[class_name]]  # Initialize as list
                 st.session_state.classes[class_name].append(st.session_state.username)
                 return True  # Return True on successful join
             else:
