@@ -1,6 +1,6 @@
 import streamlit as st
 from authentication import logout
-from Student import Student  # Import the Student class directly from Student.py
+from student import Student  # Import the Student class directly from Student.py
 
 def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
