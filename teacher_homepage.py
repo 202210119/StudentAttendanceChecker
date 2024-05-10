@@ -2,11 +2,14 @@ import streamlit as st
 from authentication import logout
 from teacher import Teacher
 import pandas as pd
+import datetime
+import time
 
 def teacher_homepage(username):
     st.title(f"Welcome, Teacher {username}!")
 
     schedule_placeholder = st.empty()
+    current_time_placeholder = st.empty()
 
     schedule_df = pd.DataFrame(columns=["Time", "Event"])
 
@@ -24,3 +27,9 @@ def teacher_homepage(username):
         schedule_df = schedule_df.append({"Time": time, "Event": event}, ignore_index=True)
 
     schedule_placeholder.table(schedule_df)
+
+    while True:
+        current_time = datetime.datetime.now().strftime("%I:%M:%S %p")
+        current_time_placeholder.write(f"# Current Time:")
+        current_time_placeholder.write(f"## {current_time}")
+        time.sleep(1)
