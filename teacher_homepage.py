@@ -12,18 +12,21 @@ def teacher_homepage(username):
 
     schedule_df = pd.DataFrame(columns=["Time", "Event"], index=range(11))
 
-    st.header("Schedule")
-    if st.checkbox("Edit Schedule"):
-        schedule_df = st.dataframe(schedule_df, editable=True)
-    else:
-        st.dataframe(schedule_df)
-
     st.header("Create a Class")
     class_name = st.text_input("Enter Class Name:")
     if st.button("Create"):
         teacher = Teacher(username)
         if teacher.create_class(class_name):
             st.success(f"Class '{class_name}' created successfully.")
+
+    st.header("Schedule")
+    if st.session_state.page == "Teacher Homepage":
+        if st.checkbox("Edit Schedule"):
+            schedule_df = st.dataframe(schedule_df, editable=True)
+        else:
+            st.dataframe(schedule_df)
+    else:
+        st.dataframe(schedule_df)
 
     while True:
         current_time = requests.get("http://worldtimeapi.org/api/timezone/Etc/UTC").json()["datetime"]
