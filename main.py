@@ -4,25 +4,22 @@ from login_page import login_page
 from register_page import register_page
 from teacher_homepage import teacher_homepage
 from student_homepage import student_homepage
-from create_class_page import create_class_page  # Import the create_class_page function
 from class_page import class_page  # Import the class page script
-from teacher import Teacher  # Import the Teacher class
 from initialize import initialize_session_state
 
 def main():
     initialize_session_state()
     
-    st.title("Simple Login and Register App")
-
     st.sidebar.title("Navigation")
     pages = ["Login", "Register"]
     if st.session_state.get("logged_in", False):
         if st.session_state.user_type == "teacher":
-            pages.extend(["Teacher Homepage", "Create Class"])  # Add "Create Class" option
-            # Add class pages dynamically
+            pages.extend(["Teacher Homepage"])
+            # Add class creation and class selection options dynamically
             teacher = Teacher.get_teacher()
             for class_name in teacher.get_teacher_classes():
                 pages.append(class_name)
+            pages.append("Create Class")
         elif st.session_state.user_type == "student":
             pages.append("Student Homepage")
 
@@ -41,6 +38,7 @@ def main():
     elif page == "Student Homepage":
         student_homepage(st.session_state.username)
     elif page == "Create Class":
+        # Show the create class page
         create_class_page()
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
