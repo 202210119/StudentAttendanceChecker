@@ -9,17 +9,18 @@ from initialize import initialize_session_state
 from teacher import Teacher
 
 def main():
-    initialize_session_state()
+    initialize.initialize_session_state()
     
+    st.title("Simple Login and Register App")
+
     st.sidebar.title("Navigation")
     pages = ["Login", "Register"]
     if st.session_state.get("logged_in", False):
         if st.session_state.user_type == "teacher":
-            pages.extend(["Teacher Homepage"])
-            teacher = Teacher.get_teacher()
-            for class_name in teacher.get_teacher_classes():
+            pages.append("Teacher Homepage")
+            teacher_instance = Teacher.get_teacher()
+            for class_name in teacher_instance.get_teacher_classes():
                 pages.append(class_name)
-            pages.append("Create Class")
         elif st.session_state.user_type == "student":
             pages.append("Student Homepage")
 
@@ -36,12 +37,10 @@ def main():
         teacher_homepage(st.session_state.username)
     elif page == "Student Homepage":
         student_homepage(st.session_state.username)
-    elif page == "Create Class":
-        create_class_page()
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
     else:
-        if page in teacher.get_teacher_classes():
+        if page in teacher_instance.get_teacher_classes():
             class_page(st.session_state.username, page)
 
 if __name__ == "__main__":
