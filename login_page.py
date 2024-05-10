@@ -9,7 +9,7 @@ def login_page():
     if st.session_state.get("logged_in", False):
         if st.button("Logout"):
             logout()
-            st.ererun()
+            st.rerun()
     else:
         if st.button("Login"):
             if login(username, password):
