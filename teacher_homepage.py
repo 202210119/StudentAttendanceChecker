@@ -2,34 +2,36 @@ import streamlit as st
 from authentication import logout
 from teacher import Teacher
 import pandas as pd
-import requests
+import datetime
 
 def teacher_homepage(username):
     st.title(f"Welcome, Teacher {username}!")
 
-    schedule_placeholder = st.empty()
-    current_time_placeholder = st.empty()
+    # Display clock
+    current_time = datetime.datetime.now().strftime("%I:%M:%S %p")
+    st.header("Current Time:")
+    st.write(current_time)
 
-    schedule_df = pd.DataFrame(columns=["Time", "Event"], index=range(11))
+    # Display class selection
+    selected_class = st.sidebar.selectbox("Select Class", ["Create New Class"] + Teacher.get_teacher_classes(username))
 
-    st.header("Create a Class")
+    if selected_class == "Create New Class":
+        create_new_class(username)
+    else:
+        display_class_schedule(selected_class)
+
+def create_new_class(username):
+    st.header("Create a New Class")
     class_name = st.text_input("Enter Class Name:")
     if st.button("Create"):
         teacher = Teacher(username)
         if teacher.create_class(class_name):
             st.success(f"Class '{class_name}' created successfully.")
 
-    st.header("Schedule")
-    if st.session_state.page == "Teacher Homepage":
-        if st.checkbox("Edit Schedule"):
-            schedule_df = st.dataframe(schedule_df, editable=True)
-        else:
-            st.dataframe(schedule_df)
+def display_class_schedule(class_name):
+    st.header(f"Class Schedule - {class_name}")
+    schedule_df = pd.DataFrame(columns=["Time", "Event"], index=range(11))
+    if st.checkbox("Edit Schedule"):
+        schedule_df = st.dataframe(schedule_df, editable=True)
     else:
         st.dataframe(schedule_df)
-
-    while True:
-        current_time = requests.get("http://worldtimeapi.org/api/timezone/Etc/UTC").json()["datetime"]
-        current_time = pd.to_datetime(current_time)
-        current_time = current_time.strftime("%I:%M:%S %p")
-        current_time_placeholder.write(f"## Current Time: {current_time}")
