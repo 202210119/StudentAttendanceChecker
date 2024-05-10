@@ -1,4 +1,5 @@
 # class_page.py
+
 import streamlit as st
 from authentication import logout
 from teacher import Teacher
