@@ -1,3 +1,5 @@
+# main.py
+
 import streamlit as st
 from login_page import login_page
 from register_page import register_page
@@ -8,7 +10,6 @@ import initialize
 
 def main():
     initialize.initialize_session_state()
-    teacher_instance = None
     
     st.sidebar.title("Navigation")
     pages = ["Login", "Register"]
@@ -35,7 +36,7 @@ def main():
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
     else:
-        if teacher_instance is not None and page in teacher_instance.get_teacher_classes():
+        if page in teacher_instance.get_teacher_classes():
             class_page(st.session_state.username, page)
 
 if __name__ == "__main__":
