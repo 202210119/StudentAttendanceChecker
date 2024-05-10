@@ -26,7 +26,4 @@ class Student:
         return False  # Return False if joining fails
 
     def get_student_classes(self):
-        if st.session_state.classes:
-            return [class_name for class_name, students in st.session_state.classes.items() if st.session_state.username in students]
-        else:
-            return []
+        return list(st.session_state.classes.keys())
