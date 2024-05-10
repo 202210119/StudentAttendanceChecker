@@ -31,14 +31,13 @@ def main():
         login_page()
     elif page == "Register":
         register_page()
-    elif page == "Class Page":
-        if st.session_state.user_type == "teacher":
-            class_page(st.session_state.username, st.session_state.selected_class)
-        else:
-            class_page(st.session_state.username, page)
-    else:
+    elif page in ["Teacher Homepage", "Student Homepage"]:
         homepage(st.session_state.username, st.session_state.user_type)
-
+    elif page == "Class Page":
+        class_page(st.session_state.username, st.session_state.selected_class)
+    else:
+        if page in teacher_instance.get_teacher_classes():
+            class_page(st.session_state.username, page)
 
 if __name__ == "__main__":
     main()
