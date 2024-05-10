@@ -4,7 +4,9 @@ from login_page import login_page
 from register_page import register_page
 from teacher_homepage import teacher_homepage
 from student_homepage import student_homepage
+from create_class_page import create_class_page  # Import the create_class_page function
 from class_page import class_page  # Import the class page script
+from teacher import Teacher  # Import the Teacher class
 from initialize import initialize_session_state
 
 def main():
@@ -39,7 +41,7 @@ def main():
     elif page == "Student Homepage":
         student_homepage(st.session_state.username)
     elif page == "Create Class":
-        create_class_page()  # Define the function to create a new class
+        create_class_page()
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
     else:
