@@ -1,6 +1,5 @@
 # homepage.py
 import streamlit as st
-from authentication import logout
 from teacher import Teacher
 from student import Student
 
@@ -20,10 +19,9 @@ def teacher_homepage(username):
         if teacher.create_class(class_name):
             st.success(f"Class '{class_name}' created successfully.")
 
-    # Display existing classes
     st.header("Your Classes")
-    teacher = Teacher.get_teacher()
-    existing_classes = teacher.get_teacher_classes()
+    teacher_instance = Teacher.get_teacher()
+    existing_classes = teacher_instance.get_teacher_classes()
     if existing_classes:
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
         if selected_class:
@@ -41,19 +39,17 @@ def student_homepage(username):
         teacher_instance = Teacher.get_teacher()
         if student.join_class(class_code, teacher_instance.get_teacher_classes()):
             st.success(f"You have joined the class with code '{class_code}'.")
+            st.session_state.selected_class = class_code
+            st.experimental_rerun()  # Reload the app to go to the selected class
 
-    st.header("Select a Class")
-    teacher_instance = Teacher.get_teacher()
-    existing_classes = teacher_instance.get_teacher_classes()
-    if existing_classes:
-        selected_class = st.selectbox("Select Class", [""] + existing_classes)
+    st.header("Your Classes")
+    student_instance = Student.get_student(username)
+    student_classes = student_instance.get_student_classes()
+    if student_classes:
+        selected_class = st.selectbox("Select Class", [""] + student_classes)
         if selected_class:
             if st.button("Go to Class"):
                 st.session_state.selected_class = selected_class
                 st.experimental_rerun()  # Reload the app to go to the selected class
     else:
-        st.info("No classes available to join.")
-
-    if st.button("Logout"):
-        logout()
-        st.experimental_rerun()
+        st.info("You haven't joined any classes yet.")
