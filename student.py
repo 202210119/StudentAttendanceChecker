@@ -1,5 +1,3 @@
-# student.py
-
 import streamlit as st
 
 class Student:
@@ -14,22 +12,20 @@ class Student:
             st.session_state.classes = {}
 
     def join_class(self, class_name):
-        # Check if the class_name exists in the session state
         if class_name in st.session_state.classes:
             if st.session_state.username not in st.session_state.classes[class_name]:
-                st.session_state.classes[class_name] = [st.session_state.username]  # Create a list with username
-                return True  # Return True on successful join
+                st.session_state.classes[class_name] = [st.session_state.username]
+                return True
             else:
                 st.warning("You are already in this class.")
         else:
-            st.session_state.classes[class_name] = [st.session_state.username]  # Create a new class entry with username list
-            return True  # Return True on successful join
+            st.session_state.classes[class_name] = [st.session_state.username]
+            return True
 
-        return False  # Return False if joining fails
+        return False
 
     def get_student_classes(self):
-        if "username" not in st.session_state:
+        if st.session_state.classes:
+            return [class_name for class_name, students in st.session_state.classes.items() if st.session_state.username in students]
+        else:
             return []
-    
-        student_username = st.session_state.username
-        return [class_name for class_name, students in st.session_state.classes.items() if student_username in students]
