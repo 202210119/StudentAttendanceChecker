@@ -1,7 +1,7 @@
+# student_homepage.py
 import streamlit as st
 from authentication import logout
 import pandas as pd
-import requests
 import datetime
 
 def student_homepage(username):
@@ -10,7 +10,7 @@ def student_homepage(username):
     schedule_placeholder = st.empty()
     current_time_placeholder = st.empty()
 
-    schedule_df = pd.DataFrame(columns=["Time", "Event"])
+    schedule_df = pd.DataFrame(columns=["Time", "Event"], index=range(11))
 
     st.header("Class Schedule")
     schedule_placeholder.table(schedule_df)
@@ -18,3 +18,4 @@ def student_homepage(username):
     while True:
         current_time = datetime.datetime.now().strftime("%I:%M:%S %p")
         current_time_placeholder.write(f"## Current Time: {current_time}")
+
