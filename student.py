@@ -1,24 +1,23 @@
 # student.py
 import streamlit as st
+from teacher import Teacher
 
 class Student:
     @staticmethod
     def get_student(username):
-        if "students" not in st.session_state:
-            st.session_state.students = {}
-        if username not in st.session_state.students:
-            st.session_state.students[username] = Student()
-        return st.session_state.students[username]
+        if "student" not in st.session_state:
+            st.session_state.student = Student()
+        return st.session_state.student
 
     def __init__(self):
         if "classes" not in st.session_state:
             st.session_state.classes = {}
 
-    def join_class(self, class_name, teacher_classes):
-        if class_name in teacher_classes:
-            if class_name not in st.session_state.classes:
-                st.session_state.classes[class_name] = []
-            st.session_state.classes[class_name].append(self.username)  # Append the username instead of the whole object
+    def join_class(self, class_code, teacher_classes):
+        if class_code in teacher_classes:
+            if class_code not in st.session_state.classes:
+                st.session_state.classes[class_code] = []
+            st.session_state.classes[class_code].append(st.session_state.username)
             return True
         else:
             return False
