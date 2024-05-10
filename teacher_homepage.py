@@ -5,7 +5,7 @@ from streamlit_calendar import calendar
 def teacher_homepage():
     st.title(f"Welcome, Teacher {st.session_state.username}!")
     st.write("This is the Teacher homepage.")
-
+'''
 calendar_options = {
     "editable": "true",
     "selectable": "true",
@@ -64,3 +64,4 @@ custom_css="""
 
 calendar = calendar(events=calendar_events, options=calendar_options, custom_css=custom_css, key='teacher')
 st.write(calendar)
+'''
