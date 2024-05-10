@@ -1,5 +1,3 @@
-# homepage.py
-
 import streamlit as st
 from authentication import logout
 from teacher import Teacher
@@ -39,13 +37,12 @@ def create_teacher_class(username):
 def join_class(username):
     st.header("Join a Class")
     st.info("Select a class to join:")
-    teacher_instance = Teacher.get_teacher()
-    existing_classes = teacher_instance.get_teacher_classes()
+    student = Student.get_student()  # Get the student instance
+    existing_classes = student.get_student_classes()  # Use the Student class to get existing classes
     if existing_classes:
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
         if selected_class:
             if st.button("Join Class"):
-                student = Student.get_student()
                 if student.join_class(selected_class):
                     st.success(f"You have joined the class '{selected_class}'.")
                 else:
