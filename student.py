@@ -12,6 +12,7 @@ class Student:
 
     def __init__(self, username):
         self.username = username
+        self.classes = {}  # Initialize the classes attribute
 
     def join_class(self, class_code, teacher_classes):
         # Check if the class code exists in the teacher's classes
