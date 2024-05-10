@@ -1,20 +1,13 @@
 import streamlit as st
 from authentication import logout
-import datetime
-import time
+import pandas as pd
 
 def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
 
-    current_time_placeholder = st.empty()
+    schedule_placeholder = st.empty()
 
-    st.header("Join a Class")
-    class_code = st.text_input("Enter Class Code:")
-    if st.button("Join"):
-        st.success(f"You have joined the class with code '{class_code}'.")
+    schedule_df = pd.DataFrame(columns=["Time", "Event"])
 
-    while True:
-        current_time = datetime.datetime.now().strftime("%I:%M:%S %p")
-        current_time_placeholder.write(f"# Current Time:")
-        current_time_placeholder.write(f"## {current_time}")
-        time.sleep(1)
+    st.header("Class Schedule")
+    schedule_placeholder.table(schedule_df)
