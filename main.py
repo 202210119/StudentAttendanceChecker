@@ -25,9 +25,9 @@ def main():
     elif page == "Register":
         register_page()
     elif page == "Teacher Homepage":
-        teacher_homepage()
+        teacher_homepage(st.session_state.username)
     elif page == "Student Homepage":
-        student_homepage()
+        student_homepage(st.session_state.username)
 
 if __name__ == "__main__":
     main()
