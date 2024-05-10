@@ -1,4 +1,4 @@
-#main.py
+# main.py
 
 #from teacher_homepage import teacher_homepage
 #from student_homepage import student_homepage
