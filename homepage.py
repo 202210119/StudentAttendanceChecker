@@ -25,7 +25,7 @@ def create_teacher_class(username):
 
     # Display existing classes
     st.header("Your Classes")
-    existing_classes = teacher.get_teacher_classes(username)
+    existing_classes = teacher.get_teacher_classes()  # Removed 'username' argument
     if existing_classes:
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
         if selected_class:
