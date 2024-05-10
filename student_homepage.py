@@ -13,7 +13,7 @@ def student_homepage(username):
             st.success(f"You have joined the class with code '{class_code}'.")
 
     # Display the classes the student has joined
-    student_instance = Student.get_student(username)
+    student_instance = student.get_student(username)
     student_classes = student_instance.get_student_classes()
 
     st.header("Your Classes")
