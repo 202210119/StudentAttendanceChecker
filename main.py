@@ -1,15 +1,11 @@
 # main.py
 
-#from teacher_homepage import teacher_homepage
-#from student_homepage import student_homepage
-
 import streamlit as st
 from login_page import login_page
 from register_page import register_page
 from class_page import class_page
 from teacher import Teacher
 from homepage import homepage
-
 import initialize 
 
 def main():
@@ -35,14 +31,8 @@ def main():
         login_page()
     elif page == "Register":
         register_page()
-    elif page in ["Teacher Homepage", "Student Homepage"]:  # Adjusted condition
-        homepage(st.session_state.username, st.session_state.user_type)  # Call homepage function with username and user_type
+    elif page in ["Teacher Homepage", "Student Homepage"]:
+        homepage(st.session_state.username, st.session_state.user_type)
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
-    else:
-        if page in teacher_instance.get_teacher_classes():
-            class_page(st.session_state.username, page)
-
-if __name__ == "__main__":
-    main()
-
+   
