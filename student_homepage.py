@@ -1,9 +1,14 @@
 import streamlit as st
 from authentication import logout
+import datetime
 
 def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
-    
+
+    st.write("# Current Time:")
+    current_time = datetime.datetime.now().strftime("%H:%M:%S")
+    st.write(f"## {current_time}")
+
     st.header("Join a Class")
     class_code = st.text_input("Enter Class Code:")
     if st.button("Join"):
