@@ -13,7 +13,6 @@ def main():
     st.sidebar.title("Navigation")
     pages = ["Login", "Register"]
     if st.session_state.get("logged_in", False):
-        # Add user-specific homepage to navigation
         if st.session_state.user_type == "teacher":
             pages.append("Teacher Homepage")
         elif st.session_state.user_type == "student":
