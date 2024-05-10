@@ -5,8 +5,8 @@ from teacher_homepage import teacher_homepage
 from student_homepage import student_homepage
 from class_page import class_page
 from create_class_page import create_class_page 
-from teacher import Teacher
-from initialize import initialize_session_state
+from Teacher import Teacher  # Import the Teacher class directly from Teacher.py
+import initialize  # Import the initialize.py file
 
 def main():
     initialize.initialize_session_state()
@@ -18,7 +18,7 @@ def main():
     if st.session_state.get("logged_in", False):
         if st.session_state.user_type == "teacher":
             pages.extend(["Teacher Homepage"])
-            teacher_instance = teacher.Teacher.get_teacher()
+            teacher_instance = Teacher.get_teacher()
             for class_name in teacher_instance.get_teacher_classes():
                 pages.append(class_name)
         elif st.session_state.user_type == "student":
