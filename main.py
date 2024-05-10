@@ -7,7 +7,7 @@ from class_page import class_page
 from create_class_page import create_class_page 
 from teacher import Teacher
 import initialize
-from authentication import login_page
+from authentication import login
 
 def main():
     initialize.initialize_session_state()
