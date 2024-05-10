@@ -4,8 +4,10 @@ from login_page import login_page
 from register_page import register_page
 from class_page import class_page
 from teacher import Teacher
+from student import Student
 from homepage import homepage
-import initialize 
+import initialize
+
 def main():
     initialize.initialize_session_state()
     
