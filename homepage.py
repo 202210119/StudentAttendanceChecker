@@ -1,4 +1,4 @@
-#homepage.py
+# homepage.py
 
 import streamlit as st
 from authentication import logout
@@ -19,7 +19,7 @@ def create_teacher_class(username):
     st.header("Create a New Class")
     class_name = st.text_input("Enter Class Name:")
     if st.button("Create Class"):
-        teacher = Teacher.get_teacher(username)
+        teacher = Teacher.get_teacher()
         if teacher.create_class(class_name):
             st.success(f"Class '{class_name}' created successfully.")
 
@@ -44,7 +44,7 @@ def join_class(username):
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
         if selected_class:
             if st.button("Join Class"):
-                student = Student.get_student(username)
+                student = Student.get_student()
                 if student.join_class(selected_class):
                     st.success(f"You have joined the class '{selected_class}'.")
                 else:
