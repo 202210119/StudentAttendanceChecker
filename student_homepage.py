@@ -1,22 +1,28 @@
 import streamlit as st
 from authentication import logout
-import pandas as pd
-import requests
+from Student import Student  # Import the Student class directly from Student.py
 
 def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
 
-    schedule_placeholder = st.empty()
-    current_time_placeholder = st.empty()
+    st.header("Join a Class")
+    class_code = st.text_input("Enter Class Code:")
+    if st.button("Join"):
+        student = Student(username)
+        if student.join_class(class_code):
+            st.success(f"You have joined the class with code '{class_code}'.")
 
-    schedule_df = pd.DataFrame(columns=["Time", "Event"], index=range(11))
+    # Display the classes the student has joined
+    student_instance = Student.get_student(username)
+    student_classes = student_instance.get_student_classes()
 
-    st.header("Class Schedule")
-    schedule_placeholder.table(schedule_df)
+    st.header("Your Classes")
+    if student_classes:
+        for class_name in student_classes:
+            st.write(class_name)
+    else:
+        st.write("You haven't joined any classes yet.")
 
-    while True:
-        current_time = requests.get("http://worldtimeapi.org/api/timezone/Etc/UTC").json()["datetime"]
-        current_time = pd.to_datetime(current_time)
-        current_time = current_time.strftime("%I:%M:%S %p")
-        current_time_placeholder.write(f"## Current Time: {current_time}")
-
+    if st.button("Logout"):
+        logout()
+        st.experimental_rerun()
