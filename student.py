@@ -1,5 +1,3 @@
-# student.py
-
 import streamlit as st
 
 class Student:
@@ -17,8 +15,8 @@ class Student:
         if class_name in st.session_state.classes:
             if st.session_state.username not in st.session_state.classes[class_name]:
                 if class_name not in st.session_state.classes:
-                    st.session_state.classes[class_name] = st.session_state.username
-                st.session_state.classes[class_name].update(st.session_state.username)
+                    st.session_state.classes[class_name] = {}  # Initialize as a dictionary
+                st.session_state.classes[class_name][st.session_state.username] = None  # Add username as key with None value
                 return True
         return False
 
