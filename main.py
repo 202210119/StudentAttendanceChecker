@@ -27,7 +27,7 @@ def main():
 
     page = st.sidebar.radio("Go to", pages)
 
-   if page == "Login":
+if page == "Login":
     login_page()
 elif page == "Register":
     register_page()
