@@ -1,4 +1,3 @@
-# student.py
 import streamlit as st
 
 class Student:
@@ -18,7 +17,7 @@ class Student:
         if class_name in teacher_classes:
             if class_name not in st.session_state.classes:
                 st.session_state.classes[class_name] = []
-            st.session_state.classes[class_name].append(self)
+            st.session_state.classes[class_name].append(self.username)  # Append the username instead of the whole object
             return True
         else:
             return False
