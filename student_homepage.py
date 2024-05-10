@@ -2,6 +2,8 @@
 import streamlit as st
 from authentication import logout
 from student import Student
+from teacher import Teacher
+
 
 def student_homepage(username):
     st.title(f"Welcome, Student {username}!")
@@ -10,11 +12,10 @@ def student_homepage(username):
     class_code = st.text_input("Enter Class Code:")
     if st.button("Join"):
         student = Student.get_student(username)
-        teacher_instance = Teacher.get_teacher()  # Assuming you have the Teacher class defined
+        teacher_instance = Teacher.get_teacher()
         if student.join_class(class_code, teacher_instance.get_teacher_classes()):
             st.success(f"You have joined the class with code '{class_code}'.")
 
-    # Display the classes the student has joined
     student_instance = Student.get_student(username)
     student_classes = student_instance.get_student_classes()
 
