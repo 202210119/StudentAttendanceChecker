@@ -15,12 +15,12 @@ class Student:
 
     def join_class(self, class_name):
         if class_name in st.session_state.classes:
-            # If the class already exists, append the student's username to the existing list of students
-            st.session_state.classes[class_name].append(st.session_state.username)
-        else:
-            # If the class doesn't exist, initialize a new list with the student's username
-            st.session_state.classes[class_name] = [st.session_state.username]
-        return True
+            if st.session_state.username not in st.session_state.classes[class_name]:
+                if class_name not in st.session_state.classes:
+                    st.session_state.classes[class_name] = []  # Initialize as a list
+                st.session_state.classes[class_name].append(st.session_state.username)
+                return True
+        return False
 
     def get_student_classes(self):
         return list(st.session_state.classes.keys())
