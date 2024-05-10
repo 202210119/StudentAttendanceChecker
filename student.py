@@ -3,12 +3,13 @@ import streamlit as st
 
 class Student:
     @staticmethod
-    def get_student():
+    def get_student(username):
         if "student" not in st.session_state:
-            st.session_state.student = Student()
+            st.session_state.student = Student(username)
         return st.session_state.student
 
-    def __init__(self):
+    def __init__(self, username):
+        self.username = username
         if "joined_classes" not in st.session_state:
             st.session_state.joined_classes = {}
 
