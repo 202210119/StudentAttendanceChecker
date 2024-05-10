@@ -7,11 +7,18 @@ def homepage(username, user_type):
     st.title(f"Welcome, {user_type.capitalize()} {username}!")
 
     if user_type == "teacher":
-        teacher_homepage(username)
+        teacher_actions()
     elif user_type == "student":
-        student_homepage(username)
+        student_actions(username)
 
-def teacher_homepage(username):
+def teacher_actions():
+    create_teacher_class()
+    delete_teacher_class()
+
+def student_actions(username):
+    join_class(username)
+
+def create_teacher_class():
     st.header("Create a New Class")
     class_name = st.text_input("Enter Class Name:")
     if st.button("Create Class"):
@@ -31,10 +38,11 @@ def teacher_homepage(username):
                     st.success(f"Class '{class_name}' deleted successfully.")
                 else:
                     st.error(f"Failed to delete class '{class_name}'.")
+
     else:
         st.info("You haven't created any classes yet.")
 
-def student_homepage(username):
+def join_class(username):
     st.header("Join a Class")
     st.info("Select a class to join:")
     teacher_instance = Teacher.get_teacher()
@@ -48,6 +56,7 @@ def student_homepage(username):
                     st.success(f"You have joined the class '{selected_class}'.")
                 else:
                     st.error(f"Failed to join the class '{selected_class}'.")
+
     else:
         st.info("No classes available to join.")
 
