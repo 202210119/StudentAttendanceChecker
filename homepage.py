@@ -7,7 +7,7 @@ def homepage(username, user_type):
     st.title(f"Welcome, {user_type.capitalize()} {username}!")
 
     if user_type == "teacher":
-        create_teacher_class()
+        create_teacher_class(username)
     elif user_type == "student":
         join_class(username)
 
@@ -17,13 +17,12 @@ def create_teacher_class(username):
     st.header("Create a New Class")
     class_name = st.text_input("Enter Class Name:")
     if st.button("Create Class"):
-        teacher = Teacher.get_teacher()
+        teacher = Teacher.get_teacher(username)
         if teacher.create_class(class_name):
             st.success(f"Class '{class_name}' created successfully.")
 
     # Display existing classes
     st.header("Your Classes")
-    teacher = Teacher.get_teacher()
     existing_classes = teacher.get_teacher_classes()
     if existing_classes:
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
