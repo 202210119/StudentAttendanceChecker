@@ -15,9 +15,8 @@ class Student:
         if class_name in st.session_state.classes:
             if st.session_state.username not in st.session_state.classes[class_name]:
                 if class_name not in st.session_state.classes:
-                    st.session_state.classes[class_name] = {}  # Initialize as a dictionary
-                st.session_state.classes[class_name][st.session_state.username] = None  # Add username as key with None value
-                return True
+                    st.session_state.classes[class_name] = {}
+                st.session_state.classes[class_name][st.session_state.username] = None
         return False
 
     def get_student_classes(self):
