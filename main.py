@@ -6,7 +6,10 @@ from login_page import login_page
 from register_page import register_page
 from class_page import class_page
 from teacher import Teacher
+from homepage import homepage
+
 import initialize 
+
 def main():
     initialize.initialize_session_state()
     
@@ -30,10 +33,8 @@ def main():
         login_page()
     elif page == "Register":
         register_page()
-    elif page == "Teacher Homepage":
-        teacher_homepage(st.session_state.username)
-    elif page == "Student Homepage":
-        student_homepage(st.session_state.username)
+    elif page in ["Teacher Homepage", "Student Homepage"]:  # Adjusted condition
+        homepage(st.session_state.username, st.session_state.user_type)  # Call homepage function with username and user_type
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
     else:
@@ -42,3 +43,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
