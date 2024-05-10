@@ -1,5 +1,3 @@
-# student.py
-
 import streamlit as st
 
 class Student:
@@ -26,8 +24,8 @@ class Student:
 
         return False
 
-     def get_student_classes(self):
-            if st.session_state.classes:
-                return [class_name for class_name, students in st.session_state.classes.items() if st.session_state.username in students]
-            else:
-                return []
+    def get_student_classes(self):
+        if st.session_state.classes:
+            return [class_name for class_name, students in st.session_state.classes.items() if st.session_state.username in students]
+        else:
+            return []
