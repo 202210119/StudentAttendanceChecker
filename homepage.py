@@ -2,7 +2,6 @@
 import streamlit as st
 from authentication import logout
 from teacher import Teacher
-from student import Student
 
 def homepage(username, user_type):
     st.title(f"Welcome, {user_type.capitalize()} {username}!")
@@ -34,26 +33,18 @@ def teacher_homepage(username):
         st.info("You haven't created any classes yet.")
 
 def student_homepage(username):
-    st.header("Join a Class")
-
-    student = Student.get_student(username)
+    st.header("Available Classes")
     teacher_instance = Teacher.get_teacher()
     existing_classes = teacher_instance.get_teacher_classes()
-
     if existing_classes:
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
         if selected_class:
-            if st.button("Join"):
-                # Check if the selected class exists before joining
-                if selected_class in existing_classes:
-                    if student.join_class(selected_class, teacher_instance.get_teacher_classes()):
-                        st.success(f"You have joined the class '{selected_class}'.")
-                else:
-                    st.warning(f"The selected class '{selected_class}' does not exist.")
+            if st.button("Join Class"):
+                st.session_state.selected_class = selected_class
+                st.experimental_rerun()  # Reload the app to go to the selected class
     else:
-        st.info("No classes available to join.")
+        st.info("No classes available.")
 
     if st.button("Logout"):
         logout()
         st.experimental_rerun()
-
