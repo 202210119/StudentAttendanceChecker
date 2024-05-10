@@ -1,3 +1,4 @@
+# teacher_homepage.py
 import streamlit as st
 from authentication import logout
 from teacher import Teacher
@@ -13,7 +14,9 @@ def teacher_homepage(username):
     st.write(current_time)
 
     # Display class selection
-    selected_class = st.sidebar.selectbox("Select Class", ["Create New Class"] + Teacher.get_teacher_classes(username))
+    teacher = Teacher(username)
+    existing_classes = teacher.get_teacher_classes()
+    selected_class = st.sidebar.selectbox("Select Class", ["Create New Class"] + existing_classes)
 
     if selected_class == "Create New Class":
         create_new_class(username)
