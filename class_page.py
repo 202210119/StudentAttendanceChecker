@@ -20,6 +20,7 @@ def class_page(username, class_name):
     st.header("Class Schedule")
     teacher = Teacher.get_teacher()
     class_schedule = teacher.get_class_schedule(class_name)
+    st.write("Class Schedule data type:", type(class_schedule))  # Print data type
     if class_schedule:
         for event_time, event_description in class_schedule.items():
             st.write(f"- {event_time}: {event_description}")
