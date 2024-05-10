@@ -8,6 +8,8 @@ from initialize import initialize_session_state
 def main():
     initialize_session_state()
     
+    st.title("Simple Login and Register App")
+
     st.sidebar.title("Navigation")
     pages = ["Login", "Register"]
     if st.session_state.get("logged_in", False):
@@ -17,6 +19,7 @@ def main():
             pages.append("Student Homepage")
 
     page = st.sidebar.radio("Go to", pages)
+    st.session_state.page = page
 
     if page == "Login":
         login_page()
