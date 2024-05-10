@@ -13,12 +13,14 @@ class Student:
         if "classes" not in st.session_state:
             st.session_state.classes = {}
 
-    def join_classes(self, teacher_classes):
-        for class_code in teacher_classes:
+    def join_class(self, class_code, teacher_classes):
+        if class_code in teacher_classes:
             if class_code not in st.session_state.classes:
-                st.session_state.classes[class_code] = [st.session_state.username]
-            else:
-                st.session_state.classes[class_code].append(st.session_state.username)
+                st.session_state.classes[class_code] = []
+            st.session_state.classes[class_code].append(st.session_state.username)
+            return True
+        else:
+            return False
 
     def get_student_classes(self):
         return list(st.session_state.classes.keys())
