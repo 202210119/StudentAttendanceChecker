@@ -1,6 +1,6 @@
 import streamlit as st
 from authentication import logout
-from teacher import Teacher  # Import the Teacher class from a separate module
+from teacher import Teacher
 
 def teacher_homepage(username):
     st.title(f"Welcome, Teacher {username}!")
