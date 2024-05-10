@@ -2,18 +2,30 @@ import streamlit as st
 from initialize import initialize_session_state
 
 def register_teacher(username, password):
+    initialize_session_state()  # Ensure session state is initialized
     if username in st.session_state.teacher_users:
         st.warning("Teacher account already exists! Please choose a different username.")
+        return False
+    elif username in st.session_state.student_users:
+        st.warning("An account with this username already exists as a student! Please choose a different username.")
+        return False
     else:
         st.session_state.teacher_users[username] = password
         st.success("Teacher account registration successful! You can now login.")
+        return True
 
 def register_student(username, password):
+    initialize_session_state()
     if username in st.session_state.student_users:
         st.warning("Student account already exists! Please choose a different username.")
+        return False
+    elif username in st.session_state.teacher_users:
+        st.warning("An account with this username already exists as a teacher! Please choose a different username.")
+        return False
     else:
         st.session_state.student_users[username] = password
         st.success("Student account registration successful! You can now login.")
+        return True
 
 def login(username, password):
     if username in st.session_state.teacher_users and st.session_state.teacher_users[username] == password:
