@@ -18,7 +18,7 @@ class Student:
             if st.session_state.username not in st.session_state.classes[class_name]:
                 if class_name not in st.session_state.classes:
                     st.session_state.classes[class_name] = []
-                st.session_state.classes[class_name].append(st.session_state.username)
+                st.session_state.classes[class_name].update(st.session_state.username)
                 return True
         return False
 
