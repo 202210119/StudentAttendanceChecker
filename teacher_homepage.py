@@ -10,13 +10,13 @@ def teacher_homepage(username):
     st.header("Create a New Class")
     class_name = st.text_input("Enter Class Name:")
     if st.button("Create"):
-        teacher = Teacher(username)
+        teacher = Teacher.get_teacher()  # Use the static method to get the Teacher instance
         if teacher.create_class(class_name):
             st.success(f"Class '{class_name}' created successfully.")
 
     # Display existing classes
     st.header("Your Classes")
-    teacher = Teacher(username)
+    teacher = Teacher.get_teacher()  # Use the static method to get the Teacher instance
     existing_classes = teacher.get_teacher_classes()
     if existing_classes:
         selected_class = st.radio("Select Class", existing_classes)
