@@ -27,17 +27,14 @@ def main():
 
     page = st.sidebar.radio("Go to", pages)
 
-    if page == "Login":
-        login_page()
-    elif page == "Register":
-        register_page()
-    elif page in ["Teacher Homepage", "Student Homepage"]:
-        homepage(st.session_state.username, st.session_state.user_type)
-    elif page == "Class Page":
-        class_page(st.session_state.username, st.session_state.selected_class)
-    else:
-        if page in teacher_instance.get_teacher_classes():
-            class_page(st.session_state.username, page)
+   if page == "Login":
+    login_page()
+elif page == "Register":
+    register_page()
+elif page == "Class Page":
+    class_page(st.session_state.username, st.session_state.selected_class)
+else:
+    homepage(st.session_state.username, st.session_state.user_type)  # All users go to homepage
 
 if __name__ == "__main__":
     main()
