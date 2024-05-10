@@ -9,20 +9,18 @@ class Student:
 
     def __init__(self):
         if "classes" not in st.session_state:
-            st.session_state.classes = []
+            st.session_state.classes = {}
 
     def join_class(self, class_name):
-        # Check if the class_name exists in the session state
         if class_name in st.session_state.classes:
-            # Check if the student is not already in the class
             if st.session_state.username not in st.session_state.classes[class_name]:
-                # Add the student to the class
+                # If the class exists and the student is not already in it, add the student
                 st.session_state.classes[class_name].append(st.session_state.username)
                 return True  # Return True on successful join
             else:
                 st.warning("You are already in this class.")
         else:
-            # If the class doesn't exist, create a new entry and add the student
+            # If the class doesn't exist, create it and add the student
             st.session_state.classes[class_name] = [st.session_state.username]
             return True  # Return True on successful join
 
