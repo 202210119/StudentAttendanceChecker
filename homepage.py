@@ -1,7 +1,7 @@
-# homepage.py
 import streamlit as st
 from authentication import logout
 from teacher import Teacher
+from student import Student
 
 def homepage(username, user_type):
     st.title(f"Welcome, {user_type.capitalize()} {username}!")
@@ -24,26 +24,32 @@ def teacher_homepage(username):
     teacher = Teacher.get_teacher()
     existing_classes = teacher.get_teacher_classes()
     if existing_classes:
-        selected_class = st.selectbox("Select Class", [""] + existing_classes)
-        if selected_class:
-            if st.button("Go to Class"):
-                st.session_state.selected_class = selected_class
-                st.experimental_rerun()  # Reload the app to go to the selected class
+        for class_name in existing_classes:
+            st.write(class_name)
+            if st.button(f"Delete {class_name}"):
+                if teacher.delete_class(class_name):
+                    st.success(f"Class '{class_name}' deleted successfully.")
+                else:
+                    st.error(f"Failed to delete class '{class_name}'.")
     else:
         st.info("You haven't created any classes yet.")
 
 def student_homepage(username):
-    st.header("Available Classes")
+    st.header("Join a Class")
+    st.info("Select a class to join:")
     teacher_instance = Teacher.get_teacher()
     existing_classes = teacher_instance.get_teacher_classes()
     if existing_classes:
         selected_class = st.selectbox("Select Class", [""] + existing_classes)
         if selected_class:
             if st.button("Join Class"):
-                st.session_state.selected_class = selected_class
-                st.experimental_rerun()  # Reload the app to go to the selected class
+                student = Student.get_student(username)
+                if student.join_class(selected_class):
+                    st.success(f"You have joined the class '{selected_class}'.")
+                else:
+                    st.error(f"Failed to join the class '{selected_class}'.")
     else:
-        st.info("No classes available.")
+        st.info("No classes available to join.")
 
     if st.button("Logout"):
         logout()
