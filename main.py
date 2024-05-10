@@ -1,14 +1,11 @@
 # main.py
-
 import streamlit as st
 from login_page import login_page
 from register_page import register_page
 from class_page import class_page
 from teacher import Teacher
-from student import Student
 from homepage import homepage
 import initialize 
-
 def main():
     initialize.initialize_session_state()
     
@@ -22,12 +19,9 @@ def main():
                 pages.append(class_name)
         elif st.session_state.user_type == "student":
             pages.append("Student Homepage")
-
         if "selected_class" in st.session_state:
             pages.append("Class Page")
-
     page = st.sidebar.radio("Go to", pages)
-
     if page == "Login":
         login_page()
     elif page == "Register":
