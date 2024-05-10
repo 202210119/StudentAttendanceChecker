@@ -1,5 +1,3 @@
-# teacher.py
-
 class Teacher:
     def __init__(self, username):
         self.username = username
@@ -14,3 +12,6 @@ class Teacher:
 
     def get_teacher_classes(self):
         return list(self.classes.keys())
+
+    def get_class_schedule(self, class_name):
+        return self.classes.get(class_name, {})
