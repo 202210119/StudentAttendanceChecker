@@ -42,15 +42,17 @@ def student_homepage(username):
         if student.join_class(class_code, teacher_instance.get_teacher_classes()):
             st.success(f"You have joined the class with code '{class_code}'.")
 
-    student_instance = Student.get_student(username)
-    if student_instance is not None:  # Check if student_instance is not None
-        student_classes = student_instance.get_student_classes()
-        st.header("Your Classes")
-        if student_classes:
-            for class_name in student_classes:
-                st.write(class_name)
-        else:
-            st.write("You haven't joined any classes yet.")
+    st.header("Select a Class")
+    teacher_instance = Teacher.get_teacher()
+    existing_classes = teacher_instance.get_teacher_classes()
+    if existing_classes:
+        selected_class = st.selectbox("Select Class", [""] + existing_classes)
+        if selected_class:
+            if st.button("Go to Class"):
+                st.session_state.selected_class = selected_class
+                st.experimental_rerun()  # Reload the app to go to the selected class
+    else:
+        st.info("No classes available to join.")
 
     if st.button("Logout"):
         logout()
