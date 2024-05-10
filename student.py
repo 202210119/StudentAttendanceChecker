@@ -25,9 +25,9 @@ class Student:
 
         return False  # Return False if joining fails
 
-def get_student_classes(self):
-    if "username" not in st.session_state:
-        return []
+    def get_student_classes(self):
+        if "username" not in st.session_state:
+            return []
 
-    student_username = st.session_state.username
-    return [class_name for class_name, students in st.session_state.classes.items() if student_username in students]
+        student_username = st.session_state.username
+        return [class_name for class_name, students in st.session_state.classes.items() if student_username in students]
