@@ -12,6 +12,8 @@ class Student:
         if "classes" not in st.session_state:
             st.session_state.classes = {}
 
+        self.classes = st.session_state.classes
+
     def join_class(self, class_name, teacher_classes):
         if class_name in teacher_classes:
             self.classes[class_name] = class_name
