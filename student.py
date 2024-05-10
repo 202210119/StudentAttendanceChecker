@@ -1,3 +1,5 @@
+# student.py
+
 import streamlit as st
 
 class Student:
@@ -26,4 +28,8 @@ class Student:
         return False  # Return False if joining fails
 
     def get_student_classes(self):
-        return list(st.session_state.classes.keys())
+        if "username" not in st.session_state:
+            return []
+    
+        student_username = st.session_state.username
+        return [class_name for class_name, students in st.session_state.classes.items() if student_username in students]
