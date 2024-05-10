@@ -1,15 +1,13 @@
-# main.py
 import streamlit as st
 from login_page import login_page
 from register_page import register_page
 from teacher_homepage import teacher_homepage
 from student_homepage import student_homepage
 from class_page import class_page
-from initialize import initialize_session_state
 from teacher import Teacher
-
+import initialize 
 def main():
-    initialize_session_state()
+    initialize.initialize_session_state()
     
     st.title("Simple Login and Register App")
 
@@ -17,11 +15,10 @@ def main():
     pages = ["Login", "Register"]
     if st.session_state.get("logged_in", False):
         if st.session_state.user_type == "teacher":
-            pages.extend(["Teacher Homepage"])
-            teacher = Teacher.get_teacher()
-            for class_name in teacher.get_teacher_classes():
+            pages.append("Teacher Homepage")
+            teacher_instance = Teacher.get_teacher()
+            for class_name in teacher_instance.get_teacher_classes():
                 pages.append(class_name)
-            pages.append("Create Class")
         elif st.session_state.user_type == "student":
             pages.append("Student Homepage")
 
@@ -41,7 +38,7 @@ def main():
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
     else:
-        if page in teacher.get_teacher_classes():
+        if page in teacher_instance.get_teacher_classes():
             class_page(st.session_state.username, page)
 
 if __name__ == "__main__":
