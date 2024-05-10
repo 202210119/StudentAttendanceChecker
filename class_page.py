@@ -1,11 +1,12 @@
 # class_page.py
+
 import streamlit as st
 from authentication import logout
 from teacher import Teacher
-from student import Student
 
 def class_page(username, class_name):
     st.title(f"Class: {class_name}")
+
     # Display option to create a new event
     st.header("Add Event to Schedule")
     event_time = st.text_input("Enter Event Time:")
@@ -14,6 +15,7 @@ def class_page(username, class_name):
         teacher = Teacher.get_teacher()
         if teacher.add_event_to_schedule(class_name, event_time, event_description):
             st.success("Event added successfully.")
+
     # Display class schedule
     st.header("Class Schedule")
     teacher = Teacher.get_teacher()
@@ -23,6 +25,7 @@ def class_page(username, class_name):
             st.write(f"- {event_time}: {event_description}")
     else:
         st.info("No events in the schedule yet.")
+
     # Option to delete the class
     if st.button("Delete Class"):
         teacher = Teacher.get_teacher()
