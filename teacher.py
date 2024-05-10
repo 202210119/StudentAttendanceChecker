@@ -33,7 +33,8 @@ class Teacher:
         return list(st.session_state.classes.keys())
 
     def get_class_schedule(self, class_name):
-        return st.session_state.classes.get(class_name, {})
+            class_data = st.session_state.classes.get(class_name, {})
+            return class_data if isinstance(class_data, dict) else {}
 
     def add_event_to_schedule(self, class_name, event_time, event_description):
         if class_name in st.session_state.classes:
