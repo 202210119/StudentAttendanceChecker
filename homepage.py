@@ -2,14 +2,12 @@ import streamlit as st
 from authentication import logout
 from teacher import Teacher
 from student import Student
-
 def homepage(username, user_type):
     st.title(f"Welcome, {user_type.capitalize()} {username}!")
     if user_type == "teacher":
         create_teacher_class(username)
     elif user_type == "student":
         join_class(username)
-        
 def create_teacher_class(username):
     st.title(f"Welcome, Teacher {username}!")
     st.header("Create a New Class")
@@ -30,7 +28,6 @@ def create_teacher_class(username):
                 st.experimental_rerun()
     else:
         st.info("You haven't created any classes yet.")
-        
 def join_class(username):
     st.header("Join a Class")
     st.info("Select a class to join:")
@@ -45,6 +42,7 @@ def join_class(username):
                     st.session_state.selected_class = selected_class
                 else:
                     st.error(f"Failed to join the class '{selected_class}'.")
+
     else:
         st.info("No classes available to join.")
     if st.button("Logout"):
