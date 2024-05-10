@@ -10,7 +10,8 @@ def student_homepage(username):
     class_code = st.text_input("Enter Class Code:")
     if st.button("Join"):
         student = Student.get_student(username)
-        if student.join_class(class_code):
+        teacher_instance = Teacher.get_teacher()  # Assuming you have the Teacher class defined
+        if student.join_class(class_code, teacher_instance.get_teacher_classes()):
             st.success(f"You have joined the class with code '{class_code}'.")
 
     # Display the classes the student has joined
