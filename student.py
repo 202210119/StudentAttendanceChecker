@@ -1,29 +1,43 @@
+# main.py
+
 import streamlit as st
+from login_page import login_page
+from register_page import register_page
+from class_page import class_page
+from teacher import Teacher
+from homepage import homepage
+import initialize 
 
-class Student:
-    @staticmethod
-    def get_student():
-        if "student" not in st.session_state:
-            st.session_state.student = Student()
-        return st.session_state.student
+def main():
+    initialize.initialize_session_state()
+    
+    st.sidebar.title("Navigation")
+    pages = ["Login", "Register"]
+    if st.session_state.get("logged_in", False):
+        if st.session_state.user_type == "teacher":
+            pages.append("Teacher Homepage")
+            teacher_instance = Teacher.get_teacher()
+            for class_name in teacher_instance.get_teacher_classes():
+                pages.append(class_name)
+        elif st.session_state.user_type == "student":
+            pages.append("Student Homepage")
 
-    def __init__(self):
-        if "classes" not in st.session_state:
-            st.session_state.classes = {}
+        if "selected_class" in st.session_state:
+            pages.append("Class Page")
 
-    def join_class(self, class_name):
-        # Check if the class_name exists in the session state
-        if class_name in st.session_state.classes:
-            if st.session_state.username not in st.session_state.classes[class_name]:
-                st.session_state.classes[class_name] = [st.session_state.username]  # Create a list with username
-                return True  # Return True on successful join
-            else:
-                st.warning("You are already in this class.")
-        else:
-            st.session_state.classes[class_name] = [st.session_state.username]  # Create a new class entry with username list
-            return True  # Return True on successful join
+    page = st.sidebar.radio("Go to", pages)
 
-        return False  # Return False if joining fails
+    if page == "Login":
+        login_page()
+    elif page == "Register":
+        register_page()
+    elif page in ["Teacher Homepage", "Student Homepage"]:
+        homepage(st.session_state.username, st.session_state.user_type)
+    elif page == "Class Page":
+        class_page(st.session_state.username, st.session_state.selected_class)
+    else:
+        if page in teacher_instance.get_teacher_classes():
+            class_page(st.session_state.username, page)
 
-    def get_student_classes(self):
-        return list(st.session_state.classes.keys())
+if __name__ == "__main__":
+    main()
