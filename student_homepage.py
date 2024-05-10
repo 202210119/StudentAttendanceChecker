@@ -12,7 +12,7 @@ def student_homepage(username):
     if st.button("Join"):
         student_instance = Student.get_student(username)
         teacher_instance = Teacher.get_teacher()
-        if student_instance.join_class(class_code, teacher_instance.get_class_names()):
+        if student_instance.join_class(class_code, class_code, teacher_instance.get_teacher_classes()):
             st.success(f"You have joined the class with code '{class_code}'.")
 
     student_instance = Student.get_student(username)
