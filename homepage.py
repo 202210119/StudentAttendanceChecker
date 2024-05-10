@@ -45,6 +45,7 @@ def join_class(username):
             if st.button("Join Class"):
                 if student.join_class(selected_class):
                     st.success(f"You have joined the class '{selected_class}'.")
+                    st.session_state.selected_class = selected_class
                 else:
                     st.error(f"Failed to join the class '{selected_class}'.")
 
