@@ -37,7 +37,6 @@ def main():
     elif page == "Student Homepage":
         student_homepage(st.session_state.username)
     elif page == "Create Class":
-        # Show the create class page
         create_class_page()
     elif page == "Class Page":
         class_page(st.session_state.username, st.session_state.selected_class)
