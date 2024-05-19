@@ -11,8 +11,8 @@ def login_page():
         st.info(f"You are logged in as {st.session_state.user_type.capitalize()}")
         if st.button("Logout"):
             logout()
-            st.experimental_rerun()
+            st.rerun()
     else:
         if st.button("Login"):
             if login(username, password):
-                st.experimental_rerun()
+                st.rerun()
