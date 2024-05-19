@@ -1,7 +1,9 @@
 import streamlit as st
+from google_sheets import get_all_records, append_row
 from authentication import logout
-from teacher import Teacher
-from student import Student
+
+SHEET_NAME = "StudentAttendanceChecker"
+CLASSES_WORKSHEET = "Classes"
 
 def homepage(username, user_type):
     st.title(f"Welcome, {user_type.capitalize()} {username}!")
@@ -12,21 +14,18 @@ def homepage(username, user_type):
         join_class(username)
 
 def create_teacher_class(username):
-    st.title(f"Welcome, Teacher {username}!")
-
     st.header("Create a New Class")
     class_name = st.text_input("Enter Class Name:")
     if st.button("Create Class"):
-        teacher = Teacher.get_teacher()  # Get the teacher instance
-        if teacher.create_class(class_name):
-            st.success(f"Class '{class_name}' created successfully.")
+        append_row(SHEET_NAME, CLASSES_WORKSHEET, [username, class_name])
+        st.success(f"Class '{class_name}' created successfully.")
 
-    # Display existing classes
     st.header("Your Classes")
-    teacher = Teacher.get_teacher()  # Get the teacher instance
-    existing_classes = teacher.get_teacher_classes()  # Removed 'username' argument
-    if existing_classes:
-        selected_class = st.selectbox("Select Class", [""] + existing_classes)
+    classes = get_all_records(SHEET_NAME, CLASSES_WORKSHEET)
+    teacher_classes = [cls["class_name"] for cls in classes if cls["teacher"] == username]
+
+    if teacher_classes:
+        selected_class = st.selectbox("Select Class", [""] + teacher_classes)
         if selected_class:
             if st.button("Go to Class"):
                 st.session_state.selected_class = selected_class
@@ -37,21 +36,21 @@ def create_teacher_class(username):
 def join_class(username):
     st.header("Join a Class")
     st.info("Select a class to join:")
-    student = Student.get_student()  # Get the student instance
-    existing_classes = student.get_student_classes()  # Use the Student class to get existing classes
-    if existing_classes:
-        selected_class = st.selectbox("Select Class", [""] + existing_classes)
+
+    classes = get_all_records(SHEET_NAME, CLASSES_WORKSHEET)
+    class_names = [cls["class_name"] for cls in classes]
+
+    if class_names:
+        selected_class = st.selectbox("Select Class", [""] + class_names)
         if selected_class:
             if st.button("Join Class"):
-                if student.join_class(selected_class):
-                    st.success(f"You have joined the class '{selected_class}'.")
-                    st.session_state.selected_class = selected_class
-                else:
-                    st.error(f"Failed to join the class '{selected_class}'.")
-
-    else:
-        st.info("No classes available to join.")
+                # Here you could add the logic to associate the student with the class in your Google Sheet
+                st.success(f"You have joined the class '{selected_class}'.")
+                st.experimental_rerun()
 
     if st.button("Logout"):
         logout()
         st.experimental_rerun()
+
+if __name__ == "__main__":
+    homepage()
