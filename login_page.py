@@ -2,7 +2,7 @@ import streamlit as st
 from google_sheets import get_all_records, append_row
 
 SHEET_NAME = "StudentAttendanceChecker"  # Your Google Sheets name
-WORKSHEET_NAME = "Users"  # Your worksheet name
+WORKSHEET_NAME = "Users" 
 
 def login_page():
     st.title("Login")
